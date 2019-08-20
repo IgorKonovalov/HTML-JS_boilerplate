@@ -35,10 +35,21 @@ div {
   vertical-align: inherit;
   margin-left: 10px;
   margin-right: 10px;
-  color: #808080c4;
   font-size: 12px;
   font-weight: bold;
   float: right;
+}
+
+.task-creation-time {
+  color: #808080c4;
+}
+
+.task-completion-time {
+  color: black;
+}
+
+.alight-resetter {
+  clear: both;
 }
 
 .clear-button {

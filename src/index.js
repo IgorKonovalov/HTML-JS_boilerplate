@@ -41,11 +41,15 @@ function addNewTask(event) {
     tastCreationTime.className = 'task-creation-time';
     tastCreationTime.innerHTML = new Date().toLocaleTimeString("en-US", timePatternOptions);
 
+    const alightResetter = document.createElement('div');
+    alightResetter.className = 'alight-resetter';
+
     taskTimeDiv.appendChild(tastCreationTime);
 
     newTaskDiv.appendChild(taskCheckBox);
     newTaskDiv.appendChild(taskTitle);
     newTaskDiv.appendChild(taskTimeDiv);
+    newTaskDiv.appendChild(alightResetter);
 
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
   }
