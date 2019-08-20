@@ -27,6 +27,8 @@ function addNewTask(event) {
     taskCheckBox.className = 'task-checkbox';
     taskCheckBox.setAttribute('type', 'checkbox');
 
+    taskCheckBox.addEventListener('click', completeTask);
+
     const taskTitle = document.createElement('div');
     taskTitle.className = 'task-title';
     taskTitle.innerHTML = newTaskInput.value;
@@ -42,6 +44,22 @@ function addNewTask(event) {
 
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
   }
+}
+
+function completeTask(event) {
+  event.target.removeEventListener('click', completeTask);
+  event.target.addEventListener('click', reopenTask);
+
+  const task = event.target.closest('.task');
+  doneTasks.insertBefore(task, doneTasks.firstChild);
+}
+
+function reopenTask(event) {
+  event.target.removeEventListener('click', reopenTask);
+  event.target.addEventListener('click', completeTask);
+
+  const task = event.target.closest('.task');
+  openTasks.insertBefore(task, openTasks.firstChild);
 }
 
 clearOpenListButton.addEventListener('click', function() {
