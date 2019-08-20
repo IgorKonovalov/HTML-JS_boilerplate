@@ -7,6 +7,10 @@ const openTasks = document.getElementById('open-tasks');
 const doneTasks = document.getElementById('done-tasks');
 
 const addTaskButton = document.getElementById('add-task-button');
+
+const clearOpenListButton = document.getElementById('clear-open-list');
+const clearDoneListButton = document.getElementById('clear-done-list');
+
 addTaskButton.addEventListener('click', addNewTask);
 newTaskInput.addEventListener('keypress', addNewTask);
 
@@ -37,5 +41,18 @@ function addNewTask(event) {
     newTaskDiv.appendChild(tastCreationTime);
 
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
+  }
+}
+
+clearOpenListButton.addEventListener('click', function() {
+  clearList(openTasks);
+});
+clearDoneListButton.addEventListener('click', function() {
+  clearList(doneTasks);
+});
+
+function clearList(taskList) {
+  while (taskList.firstChild) {
+    taskList.firstChild.remove();
   }
 }
