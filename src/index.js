@@ -11,8 +11,13 @@ const addTaskButton = document.getElementById('add-task-button');
 const clearOpenListButton = document.getElementById('clear-open-list');
 const clearDoneListButton = document.getElementById('clear-done-list');
 
+const modifyTaskInput = document.createElement('input');
+
 addTaskButton.addEventListener('click', addNewTask);
 newTaskInput.addEventListener('keypress', addNewTask);
+
+modifyTaskInput.addEventListener('keypress', processTaskModification);
+document.onkeydown = rollbackTaskModification;
 
 function addNewTask(event) {
   if (newTaskInput.value === '') {
@@ -40,6 +45,8 @@ function addNewTask(event) {
     taskTitle.className = 'task-title';
     taskTitle.innerHTML = newTaskInput.value;
     newTaskInput.value = '';
+
+    taskTitle.addEventListener('dblclick', modifyTaskTitle);
 
     const taskRightSection = document.createElement('div');
     taskRightSection.className = 'task-right-section';
@@ -113,6 +120,39 @@ function displayRemoveButton(event, shouldDisplay) {
 function removeTask(event) {
   const task = event.target.closest('.task');
   task.remove();
+}
+
+function modifyTaskTitle(event) {
+  const task = event.target.closest('.task');
+
+  const taskTitle = task.querySelector('.task-title');
+  taskTitle.classList.add('hide-block');
+
+  modifyTaskInput.value = taskTitle.innerHTML;
+  task.insertBefore(modifyTaskInput, taskTitle);
+}
+
+function processTaskModification(event) {
+  if (event.code === 'Enter') {
+    const task = event.target.closest('.task');
+    const taskTitle = task.querySelector('.task-title');
+
+    modifyTaskInput.remove();
+    taskTitle.innerHTML = modifyTaskInput.value;
+    taskTitle.classList.remove('hide-block');
+  }
+}
+
+function rollbackTaskModification(event) {
+  event = event || window.event;
+  if (event.code === 'Escape') {
+    const task = modifyTaskInput.closest('.task');
+    const taskTitle = task.querySelector('.task-title');
+
+    modifyTaskInput.remove();
+
+    taskTitle.classList.remove('hide-block');
+  }
 }
 
 clearOpenListButton.addEventListener('click', function() {
