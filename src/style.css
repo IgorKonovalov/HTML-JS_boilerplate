@@ -14,6 +14,7 @@ div {
   box-shadow: 0 0 2px rgba(0,0,0,0.5);
   padding-top: 10px;
   padding-bottom: 10px;
+  min-height: 30px;
 }
 
 .task-checkbox {
@@ -31,13 +32,18 @@ div {
   color: black;
 }
 
-.task-time {
+.task-right-section {
   vertical-align: inherit;
   margin-left: 10px;
   margin-right: 10px;
+  float: right;
+}
+
+.task-time {
   font-size: 12px;
   font-weight: bold;
-  float: right;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .task-creation-time {
@@ -46,6 +52,15 @@ div {
 
 .task-completion-time {
   color: black;
+}
+
+.remove-task-img {
+  max-width: 20px;
+  margin-left: 20px;
+}
+
+.hide-block {
+  display: none;
 }
 
 .alight-resetter {
