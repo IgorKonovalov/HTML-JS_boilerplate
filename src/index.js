@@ -36,6 +36,6 @@ function addNewTask(event) {
     newTaskDiv.appendChild(taskTitle);
     newTaskDiv.appendChild(tastCreationTime);
 
-    openTasks.appendChild(newTaskDiv);
+    openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
   }
 }
