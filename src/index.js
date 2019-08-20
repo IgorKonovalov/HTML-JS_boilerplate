@@ -13,11 +13,21 @@ const clearDoneListButton = document.getElementById('clear-done-list');
 
 const modifyTaskInput = document.createElement('input');
 
+const openTasksOrdering = document.getElementById('open-tasks-ordering');
+const doneTasksOrdering = document.getElementById('done-tasks-ordering');
+
 addTaskButton.addEventListener('click', addNewTask);
 newTaskInput.addEventListener('keypress', addNewTask);
 
 modifyTaskInput.addEventListener('keypress', processTaskModification);
 document.onkeydown = rollbackTaskModification;
+
+openTasksOrdering.addEventListener('change', function(event) {
+  sortTaskList(openTasksOrdering, openTasks);
+});
+doneTasksOrdering.addEventListener('change', function(event) {
+  sortTaskList(doneTasksOrdering, doneTasks);
+});
 
 function addNewTask(event) {
   if (newTaskInput.value === '') {
@@ -147,11 +157,13 @@ function rollbackTaskModification(event) {
   event = event || window.event;
   if (event.code === 'Escape') {
     const task = modifyTaskInput.closest('.task');
-    const taskTitle = task.querySelector('.task-title');
+    if (task) {
+      const taskTitle = task.querySelector('.task-title');
 
-    modifyTaskInput.remove();
+      modifyTaskInput.remove();
 
-    taskTitle.classList.remove('hide-block');
+      taskTitle.classList.remove('hide-block');
+    }
   }
 }
 
@@ -166,4 +178,23 @@ function clearList(taskList) {
   while (taskList.firstChild) {
     taskList.firstChild.remove();
   }
+}
+
+function sortTaskList(taskOrdering, list) {
+  const orderingValue = taskOrdering.value;
+  if (orderingValue === 'text-asc') {
+    sortByTitleAsc(list).forEach(task => list.appendChild(task));
+  } else if (orderingValue === 'text-desc') {
+    sortByTitleAsc(list)
+      .reverse()
+      .forEach(task => list.appendChild(task));
+  }
+}
+
+function sortByTitleAsc(list) {
+  return Array.prototype.slice.call(list.children).sort(function(x, y) {
+    const xTitle = x.querySelector('.task-title').innerHTML;
+    const yTitle = y.querySelector('.task-title').innerHTML;
+    return yTitle < xTitle ? 1 : -1;
+  });
 }
