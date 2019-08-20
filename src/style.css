@@ -2,6 +2,15 @@ div {
   color: blue;
 }
 
+.list-header {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.tasks-ordering {
+  float: right;
+}
+
 .task-list {
   max-width: 600px;
 }

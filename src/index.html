@@ -10,13 +10,16 @@
         <button id="add-task-button">Add</button>
     </div>
     <div class="task-list">
-        <p>Open</p>
-        <select id="open-tasks-ordering">
-            <option value="date-asc">Date creation (Asc)</option>
-            <option value="date-desc">Date creation (Desc)</option>
-            <option value="text-asc">Text (Asc)</option>
-            <option value="text-desc">Text (Desc)</option>
-        </select>
+        <div class="list-header">
+            Open
+            <select id="open-tasks-ordering" class="tasks-ordering">
+                <option value="date-asc">Date creation (Asc)</option>
+                <option value="date-desc">Date creation (Desc)</option>
+                <option value="text-asc">Text (Asc)</option>
+                <option value="text-desc">Text (Desc)</option>
+            </select>
+        </div>
+        <div class="alight-resetter"></div>
         <div id="open-tasks">
         </div>
         <div class="clear-button">
@@ -24,13 +27,15 @@
         </div>
     </div>
     <div class="task-list">
-        <p>Done</p>
-        <select id="done-tasks-ordering">
-            <option value="date-asc">Date completion (Asc)</option>
-            <option value="date-desc">Date completion (Desc)</option>
-            <option value="text-asc">Text (Asc)</option>
-            <option value="text-desc">Text (Desc)</option>
-        </select>
+        <div class="list-header">
+            Done
+            <select id="done-tasks-ordering" class="tasks-ordering">
+                <option value="date-asc">Date completion (Asc)</option>
+                <option value="date-desc">Date completion (Desc)</option>
+                <option value="text-asc">Text (Asc)</option>
+                <option value="text-desc">Text (Desc)</option>
+            </select>
+        </div>
         <div id="done-tasks">
         </div>
         <div class="clear-button">
