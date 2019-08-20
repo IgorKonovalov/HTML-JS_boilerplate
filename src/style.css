@@ -1,3 +1,32 @@
 div {
   color: blue;
 }
+
+.task {
+  vertical-align: top;
+}
+
+.task-checkbox {
+  display: inline-block;
+  vertical-align: inherit;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.task-title {
+  display: inline-block;
+  max-width: 400px;
+  width: 400px;
+  vertical-align: inherit;
+  color: black;
+}
+
+.task-time {
+  display: inline-block;
+  vertical-align: inherit;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #808080c4;
+  font-size: 12px;
+  font-weight: bold;
+}

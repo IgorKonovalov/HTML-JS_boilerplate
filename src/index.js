@@ -17,15 +17,19 @@ function addNewTask(event) {
 
   if (event.srcElement.id === 'add-task-button' || event.code === 'Enter') {
     const newTaskDiv = document.createElement('div');
+    newTaskDiv.className = 'task';
 
     const taskCheckBox = document.createElement('input');
+    taskCheckBox.className = 'task-checkbox';
     taskCheckBox.setAttribute('type', 'checkbox');
 
     const taskTitle = document.createElement('div');
+    taskTitle.className = 'task-title';
     taskTitle.innerHTML = newTaskInput.value;
     newTaskInput.value = '';
 
     const tastCreationTime = document.createElement('div');
+    tastCreationTime.className = 'task-time';
     tastCreationTime.innerHTML = new Date().toLocaleTimeString("en-US", timePatternOptions);
 
     newTaskDiv.appendChild(taskCheckBox);
