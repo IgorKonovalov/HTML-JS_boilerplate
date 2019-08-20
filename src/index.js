@@ -188,13 +188,50 @@ function sortTaskList(taskOrdering, list) {
     sortByTitleAsc(list)
       .reverse()
       .forEach(task => list.appendChild(task));
+  } else if (orderingValue === 'date-asc') {
+    sortByDateAsc(list).forEach(task => list.appendChild(task));
+  } else if (orderingValue === 'date-desc') {
+    sortByDateAsc(list)
+      .reverse()
+      .forEach(task => list.appendChild(task));
   }
 }
 
 function sortByTitleAsc(list) {
-  return Array.prototype.slice.call(list.children).sort(function(x, y) {
-    const xTitle = x.querySelector('.task-title').innerHTML;
-    const yTitle = y.querySelector('.task-title').innerHTML;
-    return yTitle < xTitle ? 1 : -1;
+  return Array.from(list.children).sort(function(task1, task2) {
+    const task1Title = task1.querySelector('.task-title').innerHTML;
+    const task2Title = task2.querySelector('.task-title').innerHTML;
+    return task2Title < task1Title ? 1 : -1;
   });
+}
+
+function sortByDateAsc(list) {
+  return Array.from(list.children).sort(function(task1, task2) {
+    const task1TimeString = getTimeStringFromTask(
+      task1,
+      list.id === 'done-tasks',
+    );
+    const task2TimeString = getTimeStringFromTask(
+      task2,
+      list.id === 'done-tasks',
+    );
+    const task1Time = getTimeFromString(task1TimeString);
+    const task2Time = getTimeFromString(task2TimeString);
+
+    return task2Time < task1Time ? 1 : -1;
+  });
+}
+
+function getTimeStringFromTask(task, done) {
+  return done
+    ? task.querySelector('.task-creation-time').innerHTML
+    : task.querySelector('.task-creation-time').innerHTML;
+}
+
+function getTimeFromString(str) {
+  const afternoon = str.endsWith('PM');
+  const hours12Format = parseInt(str.substring(0, 2));
+  const hours24Format = afternoon ? hours12Format + 12 : hours12Format;
+  const minutes = parseInt(str.substring(3, 5));
+  return Date.parse(`1970-01-01T${hours24Format}:${minutes}:00.000Z`);
 }
