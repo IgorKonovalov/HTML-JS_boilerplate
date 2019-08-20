@@ -34,13 +34,18 @@ function addNewTask(event) {
     taskTitle.innerHTML = newTaskInput.value;
     newTaskInput.value = '';
 
+    const taskTimeDiv = document.createElement('div');
+    taskTimeDiv.className = 'task-time';
+
     const tastCreationTime = document.createElement('div');
-    tastCreationTime.className = 'task-time';
+    tastCreationTime.className = 'task-creation-time';
     tastCreationTime.innerHTML = new Date().toLocaleTimeString("en-US", timePatternOptions);
+
+    taskTimeDiv.appendChild(tastCreationTime);
 
     newTaskDiv.appendChild(taskCheckBox);
     newTaskDiv.appendChild(taskTitle);
-    newTaskDiv.appendChild(tastCreationTime);
+    newTaskDiv.appendChild(taskTimeDiv);
 
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
   }
@@ -51,6 +56,14 @@ function completeTask(event) {
   event.target.addEventListener('click', reopenTask);
 
   const task = event.target.closest('.task');
+
+  const taskTimeDiv = task.querySelector('.task-time');
+  const taskCompletionTime = document.createElement('div');
+  taskCompletionTime.className = 'task-completion-time';
+  taskCompletionTime.innerHTML = new Date().toLocaleTimeString("en-US", timePatternOptions);
+
+  taskTimeDiv.appendChild(taskCompletionTime);
+
   doneTasks.insertBefore(task, doneTasks.firstChild);
 }
 
@@ -59,6 +72,10 @@ function reopenTask(event) {
   event.target.addEventListener('click', completeTask);
 
   const task = event.target.closest('.task');
+
+  const taskCompletionTime = task.querySelector('.task-completion-time');
+  taskCompletionTime.remove();
+
   openTasks.insertBefore(task, openTasks.firstChild);
 }
 
