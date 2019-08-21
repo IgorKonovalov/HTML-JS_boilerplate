@@ -67,6 +67,7 @@ function completeTask(event) {
   doneTasks.insertBefore(task, doneTasks.firstChild);
 
   saveList(openTasks);
+  saveList(doneTasks);
 }
 
 function reopenTask(event) {
@@ -81,6 +82,7 @@ function reopenTask(event) {
   openTasks.insertBefore(task, openTasks.firstChild);
 
   saveList(openTasks);
+  saveList(doneTasks);
 }
 
 function displayRemoveButton(event, shouldDisplay) {
@@ -96,6 +98,7 @@ function removeTask(event) {
   task.remove();
 
   saveList(openTasks);
+  saveList(doneTasks);
 }
 
 function modifyTaskTitle(event) {
@@ -117,7 +120,7 @@ function processTaskModification(event) {
     taskTitle.innerHTML = modifyTaskInput.value;
     taskTitle.classList.remove('hide-block');
 
-    saveList(openTasks);
+    saveList(task.parentElement);
   }
 }
 
@@ -229,7 +232,7 @@ function saveList(list) {
   const tasks = Array.from(list.children).map(task => {
     const title = task.querySelector('.task-title').innerHTML;
     const creationTime = task.querySelector('.task-creation-time').innerHTML;
-    const completionTimeSection = task.querySelector('task-completion-time');
+    const completionTimeSection = task.querySelector('.task-completion-time');
     return {
       title: title,
       creationTime: creationTime,
@@ -258,6 +261,20 @@ function loadSavedTasks() {
       )
       .forEach(task => openTasks.appendChild(task));
   }
+
+  const doneTasksObj = localStorage.getItem('doneTasks');
+
+  if (doneTasksObj) {
+    JSON.parse(doneTasksObj)
+      .map(taskObj =>
+        createTaskElement(
+          taskObj.title,
+          taskObj.creationTime,
+          taskObj.completionTime,
+        ),
+      )
+      .forEach(task => doneTasks.appendChild(task));
+  }
 }
 
 function createTaskElement(title, creationTime, completionTime) {
@@ -275,9 +292,14 @@ function createTaskElement(title, creationTime, completionTime) {
   taskCheckBox.className = 'task-checkbox';
   taskCheckBox.setAttribute('type', 'checkbox');
 
-  taskCheckBox.addEventListener('click', completeTask);
+  if (completionTime) {
+    taskCheckBox.checked = true;
+    taskCheckBox.addEventListener('click', reopenTask);
+  } else {
+    taskCheckBox.addEventListener('click', completeTask);
+  }
 
-  const taskTitle = document.createElement('div');;
+  const taskTitle = document.createElement('div');
   taskTitle.className = 'task-title';
   taskTitle.innerHTML = title;
   newTaskInput.value = '';
@@ -294,6 +316,16 @@ function createTaskElement(title, creationTime, completionTime) {
   tastCreationTime.className = 'task-creation-time';
   tastCreationTime.innerHTML = creationTime;
 
+  taskTimeDiv.appendChild(tastCreationTime);
+
+  if (completionTime) {
+    const taskCompletionTime = document.createElement('div');
+    taskCompletionTime.className = 'task-completion-time';
+    taskCompletionTime.innerHTML = completionTime;
+
+    taskTimeDiv.appendChild(taskCompletionTime);
+  }
+
   const removeTaskButton = document.createElement('img');
   removeTaskButton.className = 'remove-task-img hide-block';
   removeTaskButton.src = '../images/remove-task-img.png';
@@ -302,8 +334,6 @@ function createTaskElement(title, creationTime, completionTime) {
 
   const alightResetter = document.createElement('div');
   alightResetter.className = 'alight-resetter';
-
-  taskTimeDiv.appendChild(tastCreationTime);
 
   taskRightSection.appendChild(taskTimeDiv);
   taskRightSection.appendChild(removeTaskButton);
