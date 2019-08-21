@@ -33,6 +33,13 @@ doneTasksOrdering.addEventListener('change', function(event) {
 
 searchTasksInput.addEventListener('input', filterTasks);
 
+clearOpenListButton.addEventListener('click', function() {
+  clearList(openTasks);
+});
+clearDoneListButton.addEventListener('click', function() {
+  clearList(doneTasks);
+});
+
 loadSavedTasks();
 
 function addNewTask(event) {
@@ -137,13 +144,6 @@ function rollbackTaskModification(event) {
     }
   }
 }
-
-clearOpenListButton.addEventListener('click', function() {
-  clearList(openTasks);
-});
-clearDoneListButton.addEventListener('click', function() {
-  clearList(doneTasks);
-});
 
 function clearList(taskList) {
   while (taskList.firstChild) {
