@@ -41,58 +41,10 @@ function addNewTask(event) {
   }
 
   if (event.srcElement.id === 'add-task-button' || event.code === 'Enter') {
-    const newTaskDiv = document.createElement('div');
-    newTaskDiv.className = 'task';
+    const newTaskTitle = newTaskInput.value;
+    const newTaskCreationTime = new Date().toLocaleTimeString("en-US", timePatternOptions);
 
-    newTaskDiv.addEventListener('mouseenter', function(event) {
-      displayRemoveButton(event, true);
-    });
-    newTaskDiv.addEventListener('mouseleave', function(event) {
-      displayRemoveButton(event, false);
-    });
-
-    const taskCheckBox = document.createElement('input');
-    taskCheckBox.className = 'task-checkbox';
-    taskCheckBox.setAttribute('type', 'checkbox');
-
-    taskCheckBox.addEventListener('click', completeTask);
-
-    const taskTitle = document.createElement('div');
-    taskTitle.className = 'task-title';
-    taskTitle.innerHTML = newTaskInput.value;
-    newTaskInput.value = '';
-
-    taskTitle.addEventListener('dblclick', modifyTaskTitle);
-
-    const taskRightSection = document.createElement('div');
-    taskRightSection.className = 'task-right-section';
-
-    const taskTimeDiv = document.createElement('div');
-    taskTimeDiv.className = 'task-time';
-
-    const tastCreationTime = document.createElement('div');
-    tastCreationTime.className = 'task-creation-time';
-    tastCreationTime.innerHTML = new Date().toLocaleTimeString("en-US", timePatternOptions);
-
-    const removeTaskButton = document.createElement('img');
-    removeTaskButton.className = 'remove-task-img hide-block';
-    removeTaskButton.src = '../images/remove-task-img.png';
-
-    removeTaskButton.addEventListener('click', removeTask);
-
-    const alightResetter = document.createElement('div');
-    alightResetter.className = 'alight-resetter';
-
-    taskTimeDiv.appendChild(tastCreationTime);
-
-    taskRightSection.appendChild(taskTimeDiv);
-    taskRightSection.appendChild(removeTaskButton);
-
-    newTaskDiv.appendChild(taskCheckBox);
-    newTaskDiv.appendChild(taskTitle);
-    newTaskDiv.appendChild(taskRightSection);
-    newTaskDiv.appendChild(alightResetter);
-
+    const newTaskDiv = createTaskElement(newTaskTitle, newTaskCreationTime);
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
 
     saveList(openTasks);
