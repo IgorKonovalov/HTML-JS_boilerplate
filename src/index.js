@@ -33,6 +33,8 @@ doneTasksOrdering.addEventListener('change', function(event) {
 
 searchTasksInput.addEventListener('input', filterTasks);
 
+loadSavedTasks();
+
 function addNewTask(event) {
   if (newTaskInput.value === '') {
     return;
@@ -276,4 +278,76 @@ function saveList(list) {
   list.id === 'open-tasks'
     ? localStorage.setItem('openTasks', JSON.stringify(tasks))
     : localStorage.setItem('doneTasks', JSON.stringify(tasks));
+}
+
+function loadSavedTasks() {
+  const openTasksObj = localStorage.getItem('openTasks');
+
+  if (openTasksObj) {
+    JSON.parse(openTasksObj)
+      .map(taskObj =>
+        createTaskElement(
+          taskObj.title,
+          taskObj.creationTime,
+          taskObj.completionTime,
+        ),
+      )
+      .forEach(task => openTasks.appendChild(task));
+  }
+}
+
+function createTaskElement(title, creationTime, completionTime) {
+  const taskDiv = document.createElement('div');
+  taskDiv.className = 'task';
+
+  taskDiv.addEventListener('mouseenter', function(event) {
+    displayRemoveButton(event, true);
+  });
+  taskDiv.addEventListener('mouseleave', function(event) {
+    displayRemoveButton(event, false);
+  });
+
+  const taskCheckBox = document.createElement('input');
+  taskCheckBox.className = 'task-checkbox';
+  taskCheckBox.setAttribute('type', 'checkbox');
+
+  taskCheckBox.addEventListener('click', completeTask);
+
+  const taskTitle = document.createElement('div');;
+  taskTitle.className = 'task-title';
+  taskTitle.innerHTML = title;
+  newTaskInput.value = '';
+
+  taskTitle.addEventListener('dblclick', modifyTaskTitle);
+
+  const taskRightSection = document.createElement('div');
+  taskRightSection.className = 'task-right-section';
+
+  const taskTimeDiv = document.createElement('div');
+  taskTimeDiv.className = 'task-time';
+
+  const tastCreationTime = document.createElement('div');
+  tastCreationTime.className = 'task-creation-time';
+  tastCreationTime.innerHTML = creationTime;
+
+  const removeTaskButton = document.createElement('img');
+  removeTaskButton.className = 'remove-task-img hide-block';
+  removeTaskButton.src = '../images/remove-task-img.png';
+
+  removeTaskButton.addEventListener('click', removeTask);
+
+  const alightResetter = document.createElement('div');
+  alightResetter.className = 'alight-resetter';
+
+  taskTimeDiv.appendChild(tastCreationTime);
+
+  taskRightSection.appendChild(taskTimeDiv);
+  taskRightSection.appendChild(removeTaskButton);
+
+  taskDiv.appendChild(taskCheckBox);
+  taskDiv.appendChild(taskTitle);
+  taskDiv.appendChild(taskRightSection);
+  taskDiv.appendChild(alightResetter);
+
+  return taskDiv;
 }
