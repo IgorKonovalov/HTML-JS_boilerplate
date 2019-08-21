@@ -270,25 +270,57 @@ function createTaskElement(title, creationTime, completionTime) {
     displayRemoveButton(event, false);
   });
 
-  const taskCheckBox = document.createElement('input');
-  taskCheckBox.className = 'task-checkbox';
-  taskCheckBox.setAttribute('type', 'checkbox');
-  taskCheckBox.checked = completionTime ? true : false;
+  const taskStatus = createTaskStatus(completionTime !== undefined);
+  const taskTitle = createTaskTitle(title);
+  const taskRightSection = createTaskRightSection(creationTime, completionTime);
 
-  taskCheckBox.addEventListener('click', modifyTaskStatus);
+  const alightResetter = createAlightResetter();
 
+  taskDiv.appendChild(taskStatus);
+  taskDiv.appendChild(taskTitle);
+  taskDiv.appendChild(taskRightSection);
+
+  taskDiv.appendChild(alightResetter);
+
+  return taskDiv;
+}
+
+function createTaskStatus(done) {
+  const taskStatus = document.createElement('input');
+  taskStatus.className = 'task-checkbox';
+  taskStatus.setAttribute('type', 'checkbox');
+  taskStatus.checked = done;
+
+  taskStatus.addEventListener('click', modifyTaskStatus);
+  return taskStatus;
+}
+
+function createTaskTitle(title) {
   const taskTitle = document.createElement('div');
   taskTitle.className = 'task-title';
   taskTitle.innerHTML = title;
   newTaskInput.value = '';
 
   taskTitle.addEventListener('dblclick', modifyTaskTitle);
+  return taskTitle;
+}
 
+function createTaskRightSection(creationTime, completionTime) {
   const taskRightSection = document.createElement('div');
   taskRightSection.className = 'task-right-section';
 
-  const taskTimeDiv = document.createElement('div');
-  taskTimeDiv.className = 'task-time';
+  const taskTimeSection = createTaskTimeSection(creationTime, completionTime);
+  const removeTaskButton = createRemoveTaskButton();
+
+  taskRightSection.appendChild(taskTimeSection);
+  taskRightSection.appendChild(removeTaskButton);
+
+  return taskRightSection;
+}
+
+function createTaskTimeSection(creationTime, completionTime) {
+  const taskTimeSection = document.createElement('div');
+  taskTimeSection.className = 'task-time';
 
   const tastCreationTime = document.createElement('div');
   tastCreationTime.className = 'task-creation-time';
@@ -298,25 +330,25 @@ function createTaskElement(title, creationTime, completionTime) {
   taskCompletionTime.className = 'task-completion-time';
   taskCompletionTime.innerHTML = completionTime ? completionTime : '';
 
-  taskTimeDiv.appendChild(tastCreationTime);
-  taskTimeDiv.appendChild(taskCompletionTime);
+  taskTimeSection.appendChild(tastCreationTime);
+  taskTimeSection.appendChild(taskCompletionTime);
 
+  return taskTimeSection;
+}
+
+function createRemoveTaskButton() {
   const removeTaskButton = document.createElement('img');
   removeTaskButton.className = 'remove-task-img hide-block';
   removeTaskButton.src = '../images/remove-task-img.png';
 
   removeTaskButton.addEventListener('click', removeTask);
 
+  return removeTaskButton;
+}
+
+function createAlightResetter() {
   const alightResetter = document.createElement('div');
   alightResetter.className = 'alight-resetter';
 
-  taskRightSection.appendChild(taskTimeDiv);
-  taskRightSection.appendChild(removeTaskButton);
-
-  taskDiv.appendChild(taskCheckBox);
-  taskDiv.appendChild(taskTitle);
-  taskDiv.appendChild(taskRightSection);
-  taskDiv.appendChild(alightResetter);
-
-  return taskDiv;
+  return alightResetter;
 }
