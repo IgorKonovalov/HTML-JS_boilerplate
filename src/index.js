@@ -12,6 +12,7 @@ const clearOpenListButton = document.getElementById('clear-open-list');
 const clearDoneListButton = document.getElementById('clear-done-list');
 
 const modifyTaskInput = document.createElement('input');
+modifyTaskInput.type = 'text';
 
 const openTasksOrdering = document.getElementById('open-tasks-ordering');
 const doneTasksOrdering = document.getElementById('done-tasks-ordering');

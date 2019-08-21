@@ -8,6 +8,14 @@ body {
   height: 100%;
 }
 
+input[type=text] {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid #c3c3c3;
+  width: 70%;
+}
+
 .application {
   margin-left: auto;
   margin-right: auto;
@@ -47,6 +55,7 @@ body {
   color: inherit;
   border: none;
   font-size: 14px;
+  width: auto;
 }
 
 #add-task-button {
