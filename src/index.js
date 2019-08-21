@@ -92,6 +92,8 @@ function addNewTask(event) {
     newTaskDiv.appendChild(alightResetter);
 
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
+
+    saveList(openTasks);
   }
 }
 
@@ -255,4 +257,23 @@ function filterList(searchTerm, list) {
       task.classList.add('hide-block');
     }
   });
+}
+
+function saveList(list) {
+  const tasks = Array.from(list.children).map(task => {
+    const title = task.querySelector('.task-title').innerHTML;
+    const creationTime = task.querySelector('.task-creation-time').innerHTML;
+    const completionTimeSection = task.querySelector('task-completion-time');
+    return {
+      title: title,
+      creationTime: creationTime,
+      completionTime: completionTimeSection
+        ? completionTimeSection.innerHTML
+        : undefined,
+    };
+  });
+
+  list.id === 'open-tasks'
+    ? localStorage.setItem('openTasks', JSON.stringify(tasks))
+    : localStorage.setItem('doneTasks', JSON.stringify(tasks));
 }
