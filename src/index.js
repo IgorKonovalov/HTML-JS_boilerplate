@@ -49,13 +49,17 @@ function addNewTask(event) {
 
   if (event.srcElement.id === 'add-task-button' || event.code === 'Enter') {
     const newTaskTitle = newTaskInput.value;
-    const newTaskCreationTime = new Date().toLocaleTimeString("en-US", timePatternOptions);
+    const newTaskCreationTime = getCurrentTime();
 
     const newTaskDiv = createTaskElement(newTaskTitle, newTaskCreationTime);
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
 
     saveList(openTasks);
   }
+}
+
+function getCurrentTime() {
+  return new Date().toLocaleTimeString('en-US', timePatternOptions);
 }
 
 function completeTask(event) {
@@ -66,7 +70,7 @@ function completeTask(event) {
   const task = taskCheckBox.closest('.task');
 
   const taskCompletionTime = task.querySelector('.task-completion-time');
-  taskCompletionTime.innerHTML = new Date().toLocaleTimeString("en-US", timePatternOptions);
+  taskCompletionTime.innerHTML = getCurrentTime();
 
   doneTasks.insertBefore(task, doneTasks.firstChild);
 
