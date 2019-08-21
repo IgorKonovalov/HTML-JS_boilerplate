@@ -226,7 +226,23 @@ function filterList(searchTerm, list) {
 }
 
 function saveList(list) {
-  const tasks = Array.from(list.children).map(task => {
+  const listObj = {};
+
+  const tasks = convertListToTasks(list);
+
+  listObj.tasks = tasks;
+  listObj.ordering =
+    list.id === 'open-tasks'
+      ? openTasksOrdering.value
+      : doneTasksOrdering.value;
+
+  list.id === 'open-tasks'
+    ? localStorage.setItem('openTasks', JSON.stringify(listObj))
+    : localStorage.setItem('doneTasks', JSON.stringify(listObj));
+}
+
+function convertListToTasks(list) {
+  return Array.from(list.children).map(task => {
     const title = task.querySelector('.task-title').innerHTML;
     const creationTime = task.querySelector('.task-creation-time').innerHTML;
     const completionTimeSection = task.querySelector('.task-completion-time');
@@ -238,26 +254,24 @@ function saveList(list) {
         : undefined,
     };
   });
-
-  list.id === 'open-tasks'
-    ? localStorage.setItem('openTasks', JSON.stringify({ tasks: tasks }))
-    : localStorage.setItem('doneTasks', JSON.stringify({ tasks: tasks }));
 }
 
 function loadSavedTasks() {
   const openTasksJson = localStorage.getItem('openTasks');
-  loadTasksForList(openTasksJson, openTasks);
+  loadTasksForList(openTasksJson, openTasks, openTasksOrdering);
 
   const doneTasksJson = localStorage.getItem('doneTasks');
-  loadTasksForList(doneTasksJson, doneTasks);
+  loadTasksForList(doneTasksJson, doneTasks, doneTasksOrdering);
 }
 
-function loadTasksForList(tasksJson, list) {
+function loadTasksForList(tasksJson, list, tasksOrdering) {
   if (tasksJson) {
     const tasksWrapper = JSON.parse(tasksJson);
     tasksWrapper.tasks
       .map(task => createTaskElement(task))
       .forEach(taskElement => list.appendChild(taskElement));
+
+    tasksOrdering.value = tasksWrapper.ordering;
   }
 }
 
