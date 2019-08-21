@@ -59,17 +59,14 @@ function addNewTask(event) {
 }
 
 function completeTask(event) {
-  event.target.removeEventListener('click', completeTask);
-  event.target.addEventListener('click', reopenTask);
+  const taskCheckBox = event.target;
+  taskCheckBox.removeEventListener('click', completeTask);
+  taskCheckBox.addEventListener('click', reopenTask);
 
-  const task = event.target.closest('.task');
+  const task = taskCheckBox.closest('.task');
 
-  const taskTimeDiv = task.querySelector('.task-time');
-  const taskCompletionTime = document.createElement('div');
-  taskCompletionTime.className = 'task-completion-time';
+  const taskCompletionTime = task.querySelector('.task-completion-time');
   taskCompletionTime.innerHTML = new Date().toLocaleTimeString("en-US", timePatternOptions);
-
-  taskTimeDiv.appendChild(taskCompletionTime);
 
   doneTasks.insertBefore(task, doneTasks.firstChild);
 
@@ -304,15 +301,12 @@ function createTaskElement(title, creationTime, completionTime) {
   tastCreationTime.className = 'task-creation-time';
   tastCreationTime.innerHTML = creationTime;
 
+  const taskCompletionTime = document.createElement('div');
+  taskCompletionTime.className = 'task-completion-time';
+  taskCompletionTime.innerHTML = completionTime ? completionTime : '';
+
   taskTimeDiv.appendChild(tastCreationTime);
-
-  if (completionTime) {
-    const taskCompletionTime = document.createElement('div');
-    taskCompletionTime.className = 'task-completion-time';
-    taskCompletionTime.innerHTML = completionTime;
-
-    taskTimeDiv.appendChild(taskCompletionTime);
-  }
+  taskTimeDiv.appendChild(taskCompletionTime);
 
   const removeTaskButton = document.createElement('img');
   removeTaskButton.className = 'remove-task-img hide-block';
