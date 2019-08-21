@@ -96,10 +96,10 @@ function displayRemoveButton(event, shouldDisplay) {
 
 function removeTask(event) {
   const task = event.target.closest('.task');
-  task.remove();
+  const taskList = task.parentElement;
 
-  saveList(openTasks);
-  saveList(doneTasks);
+  task.remove();
+  saveList(taskList);
 }
 
 function modifyTaskTitle(event) {
