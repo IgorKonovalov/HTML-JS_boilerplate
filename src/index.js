@@ -51,7 +51,10 @@ function addNewTask(event) {
     const newTaskTitle = newTaskInput.value;
     const newTaskCreationTime = getCurrentTime();
 
-    const newTaskDiv = createTaskElement(newTaskTitle, newTaskCreationTime);
+    const newTaskDiv = createTaskElement({
+      title: newTaskTitle,
+      creationTime: newTaskCreationTime,
+    });
     openTasks.insertBefore(newTaskDiv, openTasks.firstChild);
 
     saveList(openTasks);
@@ -252,14 +255,12 @@ function loadSavedTasks() {
 function loadTasksForList(tasksJson, list) {
   if (tasksJson) {
     JSON.parse(tasksJson)
-      .map(task =>
-        createTaskElement(task.title, task.creationTime, task.completionTime),
-      )
+      .map(task => createTaskElement(task))
       .forEach(taskElement => list.appendChild(taskElement));
   }
 }
 
-function createTaskElement(title, creationTime, completionTime) {
+function createTaskElement(task) {
   const taskDiv = document.createElement('div');
   taskDiv.className = 'task';
 
@@ -270,9 +271,12 @@ function createTaskElement(title, creationTime, completionTime) {
     displayRemoveButton(event, false);
   });
 
-  const taskStatus = createTaskStatus(completionTime !== '');
-  const taskTitle = createTaskTitle(title);
-  const taskRightSection = createTaskRightSection(creationTime, completionTime);
+  const taskStatus = createTaskStatus(task.completionTime !== '');
+  const taskTitle = createTaskTitle(task.title);
+  const taskRightSection = createTaskRightSection(
+    task.creationTime,
+    task.completionTime,
+  );
 
   const alightResetter = createAlightResetter();
 
