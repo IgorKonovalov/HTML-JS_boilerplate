@@ -23,6 +23,32 @@ body {
   right:0;
 }
 
+.application-header {
+  height: 40px;
+  background: #2196f3d9;
+  color: white;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+.application-name {
+  display: inline;
+  color: inherit;
+}
+
+#search-tasks-input {
+  float: right;
+  background: transparent;
+  color: inherit;
+  border: none;
+  font-size: 14px;
+}
+
 #add-task-button {
   float: right;
 }
