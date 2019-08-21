@@ -193,7 +193,7 @@ function sortByDateAsc(list) {
 
 function getTimeStringFromTask(task, done) {
   return done
-    ? task.querySelector('.task-creation-time').innerHTML
+    ? task.querySelector('.task-completion-time').innerHTML
     : task.querySelector('.task-creation-time').innerHTML;
 }
 
