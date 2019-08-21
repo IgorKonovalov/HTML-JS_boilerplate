@@ -270,7 +270,7 @@ function createTaskElement(title, creationTime, completionTime) {
     displayRemoveButton(event, false);
   });
 
-  const taskStatus = createTaskStatus(completionTime !== undefined);
+  const taskStatus = createTaskStatus(completionTime !== '');
   const taskTitle = createTaskTitle(title);
   const taskRightSection = createTaskRightSection(creationTime, completionTime);
 
