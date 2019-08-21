@@ -271,7 +271,7 @@ function createTaskElement(task) {
     displayRemoveButton(event, false);
   });
 
-  const taskStatus = createTaskStatus(task.completionTime !== '');
+  const taskStatus = createTaskStatus(task.completionTime ? true : false);
   const taskTitle = createTaskTitle(task.title);
   const taskRightSection = createTaskRightSection(
     task.creationTime,
