@@ -248,32 +248,20 @@ function saveList(list) {
 }
 
 function loadSavedTasks() {
-  const openTasksObj = localStorage.getItem('openTasks');
+  const openTasksJson = localStorage.getItem('openTasks');
+  loadTasksForList(openTasksJson, openTasks);
 
-  if (openTasksObj) {
-    JSON.parse(openTasksObj)
-      .map(taskObj =>
-        createTaskElement(
-          taskObj.title,
-          taskObj.creationTime,
-          taskObj.completionTime,
-        ),
+  const doneTasksJson = localStorage.getItem('doneTasks');
+  loadTasksForList(doneTasksJson, doneTasks);
+}
+
+function loadTasksForList(tasksJson, list) {
+  if (tasksJson) {
+    JSON.parse(tasksJson)
+      .map(task =>
+        createTaskElement(task.title, task.creationTime, task.completionTime),
       )
-      .forEach(task => openTasks.appendChild(task));
-  }
-
-  const doneTasksObj = localStorage.getItem('doneTasks');
-
-  if (doneTasksObj) {
-    JSON.parse(doneTasksObj)
-      .map(taskObj =>
-        createTaskElement(
-          taskObj.title,
-          taskObj.creationTime,
-          taskObj.completionTime,
-        ),
-      )
-      .forEach(task => doneTasks.appendChild(task));
+      .forEach(taskElement => list.appendChild(taskElement));
   }
 }
 
