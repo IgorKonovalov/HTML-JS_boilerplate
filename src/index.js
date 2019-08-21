@@ -341,15 +341,15 @@ function createTaskTimeSection(creationTime, completionTime) {
   const taskTimeSection = document.createElement('div');
   taskTimeSection.className = 'task-time';
 
-  const tastCreationTime = document.createElement('div');
-  tastCreationTime.className = 'task-creation-time';
-  tastCreationTime.innerHTML = creationTime;
+  const taskCreationTime = document.createElement('div');
+  taskCreationTime.className = 'task-creation-time';
+  taskCreationTime.innerHTML = creationTime;
 
   const taskCompletionTime = document.createElement('div');
   taskCompletionTime.className = 'task-completion-time';
   taskCompletionTime.innerHTML = completionTime ? completionTime : '';
 
-  taskTimeSection.appendChild(tastCreationTime);
+  taskTimeSection.appendChild(taskCreationTime);
   taskTimeSection.appendChild(taskCompletionTime);
 
   return taskTimeSection;
