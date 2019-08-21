@@ -16,6 +16,8 @@ const modifyTaskInput = document.createElement('input');
 const openTasksOrdering = document.getElementById('open-tasks-ordering');
 const doneTasksOrdering = document.getElementById('done-tasks-ordering');
 
+const searchTasksInput = document.getElementById('search-tasks-input');
+
 addTaskButton.addEventListener('click', addNewTask);
 newTaskInput.addEventListener('keypress', addNewTask);
 
@@ -28,6 +30,8 @@ openTasksOrdering.addEventListener('change', function(event) {
 doneTasksOrdering.addEventListener('change', function(event) {
   sortTaskList(doneTasksOrdering, doneTasks);
 });
+
+searchTasksInput.addEventListener('input', filterTasks);
 
 function addNewTask(event) {
   if (newTaskInput.value === '') {
@@ -234,4 +238,21 @@ function getTimeFromString(str) {
   const hours24Format = afternoon ? hours12Format + 12 : hours12Format;
   const minutes = parseInt(str.substring(3, 5));
   return Date.parse(`1970-01-01T${hours24Format}:${minutes}:00.000Z`);
+}
+
+function filterTasks() {
+  const searchTerm = searchTasksInput.value.toLowerCase();
+  filterList(searchTerm, openTasks);
+  filterList(searchTerm, doneTasks);
+}
+
+function filterList(searchTerm, list) {
+  Array.from(list.children).forEach(task => {
+    const taskTitle = task.querySelector('.task-title').innerHTML.toLowerCase();
+    if (taskTitle.includes(searchTerm)) {
+      task.classList.remove('hide-block');
+    } else {
+      task.classList.add('hide-block');
+    }
+  });
 }
