@@ -240,8 +240,8 @@ function saveList(list) {
   });
 
   list.id === 'open-tasks'
-    ? localStorage.setItem('openTasks', JSON.stringify(tasks))
-    : localStorage.setItem('doneTasks', JSON.stringify(tasks));
+    ? localStorage.setItem('openTasks', JSON.stringify({ tasks: tasks }))
+    : localStorage.setItem('doneTasks', JSON.stringify({ tasks: tasks }));
 }
 
 function loadSavedTasks() {
@@ -254,7 +254,8 @@ function loadSavedTasks() {
 
 function loadTasksForList(tasksJson, list) {
   if (tasksJson) {
-    JSON.parse(tasksJson)
+    const tasksWrapper = JSON.parse(tasksJson);
+    tasksWrapper.tasks
       .map(task => createTaskElement(task))
       .forEach(taskElement => list.appendChild(taskElement));
   }
