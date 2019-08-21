@@ -65,6 +65,8 @@ function completeTask(event) {
   taskTimeDiv.appendChild(taskCompletionTime);
 
   doneTasks.insertBefore(task, doneTasks.firstChild);
+
+  saveList(openTasks);
 }
 
 function reopenTask(event) {
@@ -77,6 +79,8 @@ function reopenTask(event) {
   taskCompletionTime.remove();
 
   openTasks.insertBefore(task, openTasks.firstChild);
+
+  saveList(openTasks);
 }
 
 function displayRemoveButton(event, shouldDisplay) {
@@ -90,6 +94,8 @@ function displayRemoveButton(event, shouldDisplay) {
 function removeTask(event) {
   const task = event.target.closest('.task');
   task.remove();
+
+  saveList(openTasks);
 }
 
 function modifyTaskTitle(event) {
@@ -110,6 +116,8 @@ function processTaskModification(event) {
     modifyTaskInput.remove();
     taskTitle.innerHTML = modifyTaskInput.value;
     taskTitle.classList.remove('hide-block');
+
+    saveList(openTasks);
   }
 }
 
@@ -138,6 +146,8 @@ function clearList(taskList) {
   while (taskList.firstChild) {
     taskList.firstChild.remove();
   }
+
+  saveList(taskList);
 }
 
 function sortTaskList(taskOrdering, list) {
@@ -155,6 +165,8 @@ function sortTaskList(taskOrdering, list) {
       .reverse()
       .forEach(task => list.appendChild(task));
   }
+
+  saveList(list);
 }
 
 function sortByTitleAsc(list) {
