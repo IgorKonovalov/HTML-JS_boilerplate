@@ -62,35 +62,28 @@ function getCurrentTime() {
   return new Date().toLocaleTimeString('en-US', timePatternOptions);
 }
 
-function completeTask(event) {
+function modifyTaskStatus(event) {
   const taskCheckBox = event.target;
-  taskCheckBox.removeEventListener('click', completeTask);
-  taskCheckBox.addEventListener('click', reopenTask);
-
   const task = taskCheckBox.closest('.task');
 
-  const taskCompletionTime = task.querySelector('.task-completion-time');
-  taskCompletionTime.innerHTML = getCurrentTime();
-
-  doneTasks.insertBefore(task, doneTasks.firstChild);
+  taskCheckBox.checked ? completeTask(task) : reopenTask(task);
 
   saveList(openTasks);
   saveList(doneTasks);
 }
 
-function reopenTask(event) {
-  event.target.removeEventListener('click', reopenTask);
-  event.target.addEventListener('click', completeTask);
-
-  const task = event.target.closest('.task');
-
+function completeTask(task) {
   const taskCompletionTime = task.querySelector('.task-completion-time');
-  taskCompletionTime.remove();
+  taskCompletionTime.innerHTML = getCurrentTime();
+
+  doneTasks.insertBefore(task, doneTasks.firstChild);
+}
+
+function reopenTask(task) {
+  const taskCompletionTime = task.querySelector('.task-completion-time');
+  taskCompletionTime.innerHTML = '';
 
   openTasks.insertBefore(task, openTasks.firstChild);
-
-  saveList(openTasks);
-  saveList(doneTasks);
 }
 
 function displayRemoveButton(event, shouldDisplay) {
@@ -280,13 +273,9 @@ function createTaskElement(title, creationTime, completionTime) {
   const taskCheckBox = document.createElement('input');
   taskCheckBox.className = 'task-checkbox';
   taskCheckBox.setAttribute('type', 'checkbox');
+  taskCheckBox.checked = completionTime ? true : false;
 
-  if (completionTime) {
-    taskCheckBox.checked = true;
-    taskCheckBox.addEventListener('click', reopenTask);
-  } else {
-    taskCheckBox.addEventListener('click', completeTask);
-  }
+  taskCheckBox.addEventListener('click', modifyTaskStatus);
 
   const taskTitle = document.createElement('div');
   taskTitle.className = 'task-title';
