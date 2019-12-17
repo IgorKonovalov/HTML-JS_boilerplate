@@ -1,3 +1,151 @@
-div {
-  color: blue;
+html{
+  min-height:100%;/* make sure it is at least as tall as the viewport */
+  position:relative;
+}
+
+body {
+  background-color: #f5f5f5;
+  height: 100%;
+}
+
+input[type=text] {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid #c3c3c3;
+  width: 70%;
+}
+
+.application {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: white;
+  max-width: 600px;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+.application-header {
+  height: 40px;
+  background: #2196f3d9;
+  color: white;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+.application-name {
+  display: inline;
+  color: inherit;
+}
+
+#search-tasks-input {
+  float: right;
+  background: transparent;
+  color: inherit;
+  border: none;
+  font-size: 14px;
+  width: auto;
+}
+
+#add-task-button {
+  float: right;
+}
+
+.list-header {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.tasks-ordering {
+  float: right;
+}
+
+.task-list {
+  max-width: 600px;
+}
+
+.task {
+  vertical-align: top;
+  border: 1px solid #c3c3c3;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 30px;
+}
+
+.task-checkbox {
+  display: inline-block;
+  vertical-align: inherit;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.task-title {
+  display: inline-block;
+  max-width: 400px;
+  width: 400px;
+  vertical-align: inherit;
+  color: black;
+}
+
+.task-right-section {
+  vertical-align: inherit;
+  margin-left: 10px;
+  margin-right: 10px;
+  float: right;
+}
+
+.task-time {
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.task-creation-time {
+  color: #808080c4;
+}
+
+.task-completion-time {
+  color: black;
+}
+
+.remove-task-img {
+  max-width: 20px;
+  margin-left: 20px;
+}
+
+.hide-block {
+  display: none;
+}
+
+.alight-resetter {
+  clear: both;
+}
+
+.clear-button {
+  margin-left: auto;
+  margin-right: 0px;
+  color: black;
+  text-align: right;
+}
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
